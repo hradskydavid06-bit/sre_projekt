@@ -1,0 +1,20 @@
+name: SRE Health Check Automation
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  workflow_dispatch: # Tohle nám umožní spustit to na GitHubu i ručně tlačítkem
+
+jobs:
+  diagnostika-serveru:
+    runs-on: ubuntu-latest # GitHub nám pro tento úkol zdarma pronajme čisté Ubuntu
+    
+    steps:
+      - name: 1. Stáhnutí kódu z repozitáře
+        uses: actions/checkout@v4
+        
+      - name: 2. Nastavení práv pro spuštění
+        run: chmod +x health_check.sh
+        
+      - name: 3. Spuštění samotného skriptu
+        run: ./health_check.sh
